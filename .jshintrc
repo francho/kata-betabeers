@@ -2,7 +2,7 @@
   "node": true,
   "esnext": true,
   "bitwise": true,
-  "camelcase": true,
+  "camelcase": false,
   "curly": true,
   "eqeqeq": true,
   "immed": true,
@@ -17,5 +17,20 @@
   "strict": true,
   "trailing": true,
   "smarttabs": true,
-  "white": true
+  "white": true,
+  "jasmine": true,
+  "globals": {
+    "jasmine": false,
+    "describe": false,
+    "xdescribe": false,
+    "before": false,
+    "beforeEach": false,
+    "after": false,
+    "afterEach": false,
+    "it": false,
+    "xit": false,
+    "inject": false,
+    "expect": false,
+    "spyOn": false
+  }
 }
