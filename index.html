@@ -32,6 +32,12 @@
       margin: -20px 0 0 0;
     }
 
+    h3 {
+      font-size: 2em;
+      color: #E62B1E;
+      text-align: left;
+    }
+
     #about {
       font-size: 1.2em;
     }
@@ -66,22 +72,31 @@
       margin-bottom: 70px;
     }
 
-    p {
+    .code {
       color: #E62B1E;
       float: left;
       margin-left: 35px;
       margin-top: 100px;
+      margin-bottom: 35px;
       display: inline-block;
       font-size: 2em;
       positon: relative;
     }
 
+    .container {
+      margin: 100px;
+    }
+
+    .container li, .container p {
+      text-align: left;
+      font-size:1.5em;
+    }
   </style>
 </head>
 <body>
 <header>
   <div id="title">
-    <p>code</p>
+    <span class="code">code</span>
 
     <h1>kata</h1>
 
@@ -94,12 +109,89 @@
   </div>
 </header>
 
+
+<div>
+  <a class="twitter-timeline" href="https://twitter.com/search?q=%23bbzgz%20Since%3A2015-12-08%20Until%3A2015-12-12"
+     data-widget-id="675076753782669316">Tweets sobre #bbzgz Since:2015-12-08 Until:2015-12-12</a>
+  <script>!function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
+    if (!d.getElementById(id)) {
+      js = d.createElement(s);
+      js.id = id;
+      js.src = p + "://platform.twitter.com/widgets.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }
+  }(document, "script", "twitter-wjs");</script>
+</div>
+
+
+<div class="container">
+  <h3>Randoi (las reglas)</h3>
+  <ul>
+    <li>2 personas pilotan, el resto observa</li>
+    <li>Cada 5 minutos sale el piloto, le releva el copiloto y entra otra nueva</li>
+    <li>Antes de cada cambio haremos una mini retrospectiva en la que todos pueden aportar</li>
+    <li>Si tú tienes le teclado, tú decides que tecleas</li>
+    <li>Si tú tienes le teclado y no sabes que teclear, pide ayuda</li>
+    <li>Si te piden ayuda, responde amablemente</li>
+    <li>Si no te piden ayuda, pero ves una oportunidad de mejora o aprendizaje, elije un momento apropiado para hablar
+      de eso (cuando los tests esten en verde o la próxima retrospectiva)
+    </li>
+  </ul>
+</div>
+
+<div class="container" style="text-align: left">
+  <h3>Gilded Rose (la kata)</h3>
+  <p>Tenemos un sistema de inventario desarrollado por un tipo un tanto peculiar y con poco sentido común llamado
+    Leeory, ahora esta persiguiendo nuevas aventuras!, tanta paz lleves como descanso dejas amigo Leeroy!. Tu tarea
+    consiste en añadir una nueva funcionalidad al sistema para que podamos empezar a vender una nueva categoría de
+    items. Para empezar una pequeña introducción a nuestro sistema:</p>
+
+  <ul>
+    <li>Todos los items tienen una fecha de venta, SellIn , que especifica el número de días que tenemos para vender el
+      item.
+    </li>
+    <li>Todos los items tienen una calidad , Quality , que especifica el valor que tiene un item.</li>
+    <li>Al final del día el sistema reduce los valores para los dos valores de cada item.</li>
+  </ul>
+
+  <p>Simple ¿no?, ahora empieza lo interesante:</p>
+
+  <ul>
+    <li>Los items degradan la calidad en una unidad por cada actualización.</li>
+    <li>Cuando la fecha de venta a pasado, la calidad degrada al doble de velocidad.</li>
+    <li>La calidad de un item no es nunca negativa.</li>
+    <li>El item "aged brie" incrementa su calidad en lugar de decrementarla según pasan los días.</li>
+    <li>La calidad de un item nunca es mayor de 50.</li>
+    <li>El item "Sulfuras", nuestro articulo más legendario!, nunca debe venderse ni disminuye su calidad.</li>
+    <li>los "backstage passes" incrementan su calidad conforme se aproxima la fecha de venta. La calidad se incrementa
+      por dos cuando quedan 10 días o menos para el concierto, por 3 cuando quedan 5 días o menos. Sin embargo la
+      calidad disminuye a 0 después del concierto.
+    </li>
+  </ul>
+
+  <p>Hemos firmado un nuevo acuerdo para vender items "conjured", sin embargo necesitamos un cambio en el sistema:</p>
+
+  <ul>
+    <li>Los items "conjured" disminuyen de calidad el doble de rápido que el resto.</li>
+  </ul>
+
+  <p>Por supuesto puedes hacer cualquier cambio al método updateQuality si lo consideras necesario mientras que todo
+    siga funcionando claro esta!. Sin embargo <strong>hay dos cosas que no puedes hacer</strong>:</p>
+
+  <ul>
+    <li><strong>Cambiar el interfaz</strong> y la forma de uso de GildedRose (la función update_quality), es fea, lo
+      sabemos, pero tenemos muchos sistemas que la utilizan y no vamos a cambiarlos todos ahora!
+    </li>
+    <li><strong>¡No puedes tocar la clase item!</strong>. Pertenece a una especie de goblin asesino que no cree en cosas
+      como la propiedad colectiva del código.
+    </li>
+  </ul>
+</div>
+
 <div id="start">
   <a href="https://github.com/francho/kata-betabeers">https://github.com/francho/kata-betabeers</a>
 </div>
-
-<a class="twitter-timeline" href="https://twitter.com/search?q=%23bbzgz%20Since%3A2015-12-08%20Until%3A2015-12-12" data-widget-id="675076753782669316">Tweets sobre #bbzgz Since:2015-12-08 Until:2015-12-12</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 
 </body>
 </html>
