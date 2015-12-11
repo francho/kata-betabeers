@@ -4,19 +4,19 @@ function Item(name, sell_in, quality) {
   this.quality = quality;
 }
 
-var items = []
+var items = [];
 
 function update_quality() {
   "use strict";
   items.forEach(function (item) {
     if (!isAgedBrie(item) && !isBackstagePass(item)) {
-      if (item.quality > 0 && !isSulfuras(item)) {
+      if (isQualityPositive(item) && !isSulfuras(item)) {
           decrementQuality(item);
       }
     } else {
-      if (item.quality < 50) {
+      if (isQualityLimit(item)) {
         incrementQuality(item);
-        if (isBackstagePass(item) && item.quality < 50) {
+        if (isBackstagePass(item) && isQualityLimit(item)) {
           if (item.sell_in < 11) {
               incrementQuality(item);
           }
@@ -31,13 +31,13 @@ function update_quality() {
     }
     if (item.sell_in < 0) {
       if (!isAgedBrie(item)) {
-        if (!isBackstagePass(item) && item.quality > 0 && !isSulfuras(item)) {
+        if (!isBackstagePass(item) && isQualityPositive(item) && !isSulfuras(item)) {
           decrementQuality(item);
         } else {
           item.quality = 0;
         }
       } else {
-        if (item.quality < 50) {
+        if (isQualityLimit(item)) {
           incrementQuality(item);
         }
       }
@@ -66,4 +66,15 @@ function update_quality() {
     item.quality --;
   }
 
+  function isQualityPositive(item){
+    return item.quality > 0;
+  }
+
+  function isQualityLimit(item){
+    return item.quality < 50;
+  }
+
+  function isSellEarly(item){
+    return item.sell_in < 11;
+  }
 }
