@@ -7,17 +7,18 @@ function Item(name, sell_in, quality) {
 var items = []
 
 function update_quality() {
+  "use strict";
   for (var i = 0; i < items.length; i++) {
-    if (items[i].name != 'Aged Brie' && items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
+    if (!isAgedBrie(i) && !isBackstagePass(i)) {
       if (items[i].quality > 0) {
-        if (items[i].name != 'Sulfuras, Hand of Ragnaros') {
+        if (!isSulfuras(i)) {
           items[i].quality = items[i].quality - 1
         }
       }
     } else {
       if (items[i].quality < 50) {
         items[i].quality = items[i].quality + 1
-        if (items[i].name == 'Backstage passes to a TAFKAL80ETC concert') {
+        if (isBackstagePass(i) && items[i].quality < 50) {
           if (items[i].sell_in < 11) {
             if (items[i].quality < 50) {
               items[i].quality = items[i].quality + 1
@@ -31,19 +32,19 @@ function update_quality() {
         }
       }
     }
-    if (items[i].name != 'Sulfuras, Hand of Ragnaros') {
+    if (!isSulfuras(i)) {
       items[i].sell_in = items[i].sell_in - 1;
     }
     if (items[i].sell_in < 0) {
-      if (items[i].name != 'Aged Brie') {
-        if (items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
+      if (!isAgedBrie(i)) {
+        if (!isBackstagePass(i)) {
           if (items[i].quality > 0) {
-            if (items[i].name != 'Sulfuras, Hand of Ragnaros') {
+            if (!isSulfuras(i)) {
               items[i].quality = items[i].quality - 1
             }
           }
         } else {
-          items[i].quality = items[i].quality - items[i].quality
+          items[i].quality = 0;
         }
       } else {
         if (items[i].quality < 50) {
@@ -52,4 +53,19 @@ function update_quality() {
       }
     }
   }
+
+
+  function isAgedBrie(item) {
+
+    return items[item].name === 'Aged Brie';
+  }
+
+  function isSulfuras(item) {
+    return items[item].name === 'Sulfuras, Hand of Ragnaros';
+  }
+
+  function isBackstagePass(item) {
+    return items[item].name === 'Backstage passes to a TAFKAL80ETC concert';
+  }
+
 }
