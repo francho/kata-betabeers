@@ -8,64 +8,62 @@ var items = []
 
 function update_quality() {
   "use strict";
-  for (var i = 0; i < items.length; i++) {
-    if (!isAgedBrie(i) && !isBackstagePass(i)) {
-      if (items[i].quality > 0) {
-        if (!isSulfuras(i)) {
-          items[i].quality = items[i].quality - 1
-        }
+  items.forEach(function (item) {
+    if (!isAgedBrie(item) && !isBackstagePass(item)) {
+      if (item.quality > 0 && !isSulfuras(item)) {
+          decrementQuality(item);
       }
     } else {
-      if (items[i].quality < 50) {
-        items[i].quality = items[i].quality + 1
-        if (isBackstagePass(i) && items[i].quality < 50) {
-          if (items[i].sell_in < 11) {
-            if (items[i].quality < 50) {
-              items[i].quality = items[i].quality + 1
-            }
+      if (item.quality < 50) {
+        incrementQuality(item);
+        if (isBackstagePass(item) && item.quality < 50) {
+          if (item.sell_in < 11) {
+              incrementQuality(item);
           }
-          if (items[i].sell_in < 6) {
-            if (items[i].quality < 50) {
-              items[i].quality = items[i].quality + 1
-            }
+          if (item.sell_in < 6) {
+              incrementQuality(item);
           }
         }
       }
     }
-    if (!isSulfuras(i)) {
-      items[i].sell_in = items[i].sell_in - 1;
+    if (!isSulfuras(item)) {
+      item.sell_in = item.sell_in - 1;
     }
-    if (items[i].sell_in < 0) {
-      if (!isAgedBrie(i)) {
-        if (!isBackstagePass(i)) {
-          if (items[i].quality > 0) {
-            if (!isSulfuras(i)) {
-              items[i].quality = items[i].quality - 1
-            }
-          }
+    if (item.sell_in < 0) {
+      if (!isAgedBrie(item)) {
+        if (!isBackstagePass(item) && item.quality > 0 && !isSulfuras(item)) {
+          decrementQuality(item);
         } else {
-          items[i].quality = 0;
+          item.quality = 0;
         }
       } else {
-        if (items[i].quality < 50) {
-          items[i].quality = items[i].quality + 1
+        if (item.quality < 50) {
+          incrementQuality(item);
         }
       }
     }
-  }
+  });
 
 
   function isAgedBrie(item) {
 
-    return items[item].name === 'Aged Brie';
+    return item.name === 'Aged Brie';
   }
 
   function isSulfuras(item) {
-    return items[item].name === 'Sulfuras, Hand of Ragnaros';
+    return item.name === 'Sulfuras, Hand of Ragnaros';
   }
 
   function isBackstagePass(item) {
-    return items[item].name === 'Backstage passes to a TAFKAL80ETC concert';
+    return item.name === 'Backstage passes to a TAFKAL80ETC concert';
+  }
+
+  function incrementQuality(item){
+    item.quality ++;
+  }
+
+  function decrementQuality(item){
+    item.quality --;
   }
 
 }
