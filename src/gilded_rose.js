@@ -9,41 +9,62 @@ var items = [];
 
 function update_quality() {
   'use strict';
-  items.forEach(function (item) {
-    if (!isAgedBrie(item) && !isBackstagePass(item)) {
-      if (!isSulfuras(item)) {
-          decrementQuality(item);
-      }
+  items.forEach(function(item) {
+
+    if (isAgedBrie(item) || isBackstagePass(item)) {
+      updateQualityForAgedBrie(item);
+      updateQualityForBackstagePass(item);
     } else {
-        incrementQuality(item);
-        if (isBackstagePass(item)) {
-          if (item.sell_in < 11) {
-              incrementQuality(item);
-          }
-          if (item.sell_in < 6) {
-              incrementQuality(item);
-          }
-        }
+      if (!isSulfuras(item)) {
+        decrementQuality(item);
+      }
     }
+
     if (!isSulfuras(item)) {
       item.sell_in = item.sell_in - 1;
     }
-    if (item.sell_in < 0) {
-      if (!isAgedBrie(item)) {
-        if (!isBackstagePass(item) && !isSulfuras(item)) {
-          decrementQuality(item);
-        } else {
-          item.quality = 0;
-        }
+
+    if (sellInExpired(item)) {
+      if (isAgedBrie(item)) {
+        incrementQuality(item);
       } else {
-          incrementQuality(item);
+        if ((isBackstagePass(item) || isSulfuras(item))) {
+          item.quality = 0;
+        } else {
+          decrementQuality(item);
+        }
       }
     }
   });
 
+  function updateQualityForAgedBrie(item) {
+    if(!isAgedBrie(item)) {
+      return;
+    }
+
+    incrementQuality(item);
+  }
+
+  function updateQualityForBackstagePass(item) {
+    if (!isBackstagePass(item)) {
+      return;
+    }
+
+    incrementQuality(item);
+
+    if (item.sell_in < 11) {
+      incrementQuality(item);
+    }
+    if (item.sell_in < 6) {
+      incrementQuality(item);
+    }
+  }
+
+  function updateQualityForSulfuras(item) {
+
+  }
 
   function isAgedBrie(item) {
-
     return item.name === 'Aged Brie';
   }
 
@@ -55,20 +76,24 @@ function update_quality() {
     return item.name === 'Backstage passes to a TAFKAL80ETC concert';
   }
 
-  function incrementQuality(item){
-    if(item.quality >= 50) {
+  function incrementQuality(item) {
+    if (item.quality >= 50) {
       return;
     }
 
-    item.quality ++;
+    item.quality++;
   }
 
-  function decrementQuality(item){
-    if(item.quality < 1) {
+  function decrementQuality(item) {
+    if (item.quality < 1) {
       return;
     }
 
-    item.quality --;
+    item.quality--;
+  }
+
+  function sellInExpired(item) {
+    return item.sell_in < 0;
   }
 
 }
