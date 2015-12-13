@@ -11,57 +11,55 @@ function update_quality() {
   'use strict';
   items.forEach(function(item) {
 
-    if (isAgedBrie(item) || isBackstagePass(item)) {
-      updateQualityForAgedBrie(item);
-      updateQualityForBackstagePass(item);
-    } else {
-      if (!isSulfuras(item)) {
-        decrementQuality(item);
-      }
-    }
+    updateQualityForAgedBrie(item) ||
+    updateQualityForBackstagePass(item) ||
+    updateQualityForSulfuras(item) ||
+    updateQualityForDefault(item);
 
-    if (!isSulfuras(item)) {
-      item.sell_in = item.sell_in - 1;
-    }
-
-    if (sellInExpired(item)) {
-      if (isAgedBrie(item)) {
-        incrementQuality(item);
-      } else {
-        if ((isBackstagePass(item) || isSulfuras(item))) {
-          item.quality = 0;
-        } else {
-          decrementQuality(item);
-        }
-      }
-    }
+    updateShellIn(item);
   });
 
   function updateQualityForAgedBrie(item) {
-    if(!isAgedBrie(item)) {
-      return;
+    if (!isAgedBrie(item)) {
+      return false;
     }
 
-    incrementQuality(item);
+    if (sellInExpired(item)) {
+      decrementQuality(item);
+    } else {
+      incrementQuality(item);
+    }
+
+    return true;
   }
 
   function updateQualityForBackstagePass(item) {
     if (!isBackstagePass(item)) {
-      return;
+      return false;
     }
 
-    incrementQuality(item);
+    if (sellInExpired(item)) {
+      item.quality = 0;
+    } else {
+      if (item.sell_in < 11) {
+        incrementQuality(item);
+      }
+      if (item.sell_in < 6) {
+        incrementQuality(item);
+      }
+      incrementQuality(item);
+    }
 
-    if (item.sell_in < 11) {
-      incrementQuality(item);
-    }
-    if (item.sell_in < 6) {
-      incrementQuality(item);
-    }
+    return true;
   }
 
   function updateQualityForSulfuras(item) {
+    return isSulfuras(item);
+  }
 
+  function updateQualityForDefault(item) {
+    decrementQuality(item);
+    return true;
   }
 
   function isAgedBrie(item) {
@@ -89,11 +87,16 @@ function update_quality() {
       return;
     }
 
-    item.quality--;
+    item.quality -= sellInExpired(item) ? 2 : 1;
   }
 
   function sellInExpired(item) {
     return item.sell_in < 0;
   }
 
+  function updateShellIn(item) {
+    if (!isSulfuras(item)) {
+      item.sell_in--;
+    }
+  }
 }
