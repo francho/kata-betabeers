@@ -51,7 +51,7 @@ describe('Gilded Rose', function() {
   });
 
   it('Los backstage passes valen 0 cuando se pasa la fecha de sell in', function() {
-    items = [new Item('Backstage passes to a TAFKAL80ETC concert', 0, 10)];
+    items = [new Item('Backstage passes to a TAFKAL80ETC concert', -1, 10)];
     update_quality();
     expect(items[0].quality).toEqual(0);
   });
