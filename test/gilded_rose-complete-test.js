@@ -1,7 +1,7 @@
-/* global update_quality, Item, items */
+/* global update_quality, Item, items: true */
 
 describe('Gilded Rose', function() {
-  "use strict";
+  'use strict';
 
   describe('cada actualización', function() {
 
@@ -20,7 +20,7 @@ describe('Gilded Rose', function() {
 
     describe('fecha venta pasada', function() {
       beforeEach(function() {
-        items = [new Item("foo", -1, 3)];
+        items = [new Item('foo', -1, 3)];
         update_quality();
       });
 
@@ -31,7 +31,7 @@ describe('Gilded Rose', function() {
     });
 
     it('calidad nunca es negativa', function() {
-      items = [new Item("foo", -1, 0)];
+      items = [new Item('foo', -1, 0)];
       update_quality();
       expect(items[0].quality).toEqual(0);
     });
